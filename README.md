@@ -88,4 +88,4 @@ Support for OpenAPI/Swagger: Enable the agent to directly parse structured OpenA
 
 Advanced Refactoring: Give the agent the ability to integrate its generated code into an existing codebase rather than just creating a new file.
 
-Interactive Credential Handling: Allow the agent to pause and ask for API keys if it discovers they are needed during the testing phase.
+Interactive Credential Handling: Allow the agent to pause and ask for API keys if it discovers they are needed during the testing phase. ---ADDED.
