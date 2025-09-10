@@ -58,8 +58,8 @@ class Workflow:
         api_info = structured_llm.invoke(messages)
         api_info.title = unicodedata.normalize('NFKD', api_info.title).encode('ascii', 'ignore').decode('utf-8')
 
-        print(len(api_info.endpoints))
-        print(api_info.title)
+        print("Title: " + api_info.title)
+        print(f"No of relevant endpoints extracted: {len(api_info.endpoints)}")
         return {"api_info": api_info}
     
     def _api_codegen(self, state: ResearchState) -> str:
@@ -72,17 +72,16 @@ class Workflow:
         ]
         code = self.llm.invoke(messages)
         code = code.content.replace("`", "").replace("python", "") 
-        print("\n\n---------------------------------------------------------------------\n\n")
-        print(code)
+        print("Code Generated......")
         return {"code": code}
     
 
     def _file_writer(self, state: ResearchState) -> str:
         file_name = f"{state.api_info.title}.py"
+        print("Writing to a file.....")
         with open(file_name, 'w') as file:
             file.write(state.code)
-
-        print(file_name)
+        print("Generated code file: " + file_name)
         return {"file_name": file_name}
 
 
