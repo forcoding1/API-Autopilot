@@ -25,6 +25,7 @@ class APIEndpoint(BaseModel):
     requires_api_key: bool = False      # true if authentication needed
     request_example: Optional[str] = None
     response_example: Optional[str] = None
+    api_key: Optional[str] = None
 
 
 class APIDescription(BaseModel):
@@ -35,6 +36,8 @@ class APIDescription(BaseModel):
 
 class ResearchState(BaseModel):
     query: URLPrompt
-    api_info: Optional[APIDescription] = None   
+    api_info: Optional[APIDescription] = None
     code: str = ""
-    file_name: str =  ""
+    file_name: str = ""
+    requires_api_key: Literal["api_key", "code_gen"] = "code_gen"
+    api_key: Optional[str] = None

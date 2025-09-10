@@ -66,4 +66,5 @@ class ApiIntegratorPrompts:
             5. Keep code production-ready, with clear parameter type hints while keeping them very short.  
             6. Ensure the response is parsed into Python dictionaries/objects.  
             Input (structured metadata): {structured_api_info} 
+            Add the api key to code if there is any.
             """

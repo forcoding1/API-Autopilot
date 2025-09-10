@@ -1,5 +1,5 @@
 import asyncio
-from typing import Dict, Any
+from typing import Dict, Any, Literal
 from langgraph.graph import StateGraph, END
 from playwright.async_api import async_playwright
 from bs4 import BeautifulSoup
@@ -24,12 +24,24 @@ class Workflow:
         graph.add_node("scrape_content", self._scrape_content)
         graph.add_node("code_gen", self._api_codegen)
         graph.add_node("file_writer", self._file_writer)
+        graph.add_node("api_key", self._api_input)
         graph.set_entry_point("scrape_content")
         graph.add_edge("scrape_content", "code_gen")
+        graph.add_conditional_edges("scrape_content", self._api_key_required)
+        graph.add_edge("api_key" ,"code_gen")
         graph.add_edge("code_gen", "file_writer")
         graph.add_edge("file_writer", END)
         return graph.compile()
 
+    def _api_input(self, state:ResearchState) -> str:
+        api_key = input("API_KEY: ")
+        return {"api_key": api_key}
+    
+    def _api_key_required(self, state: ResearchState) -> Literal["api_key","code_gen"]:
+        for endpoints in state.api_info.endpoints:
+            if endpoints.requires_api_key:
+                return "api_key"
+        return "code_gen"
 
 
     async def _scrape_content(self, state: ResearchState) -> APIDescription:
@@ -51,6 +63,9 @@ class Workflow:
         return {"api_info": api_info}
     
     def _api_codegen(self, state: ResearchState) -> str:
+        for endpoint in state.api_info.endpoints:
+            if state.api_key:
+                endpoint.api_key = state.api_key
         messages = [
             SystemMessage(content = self.prompts.API_CODEGEN_SYSTEM),
             HumanMessage(content= self.prompts.api_codegen(state.api_info))

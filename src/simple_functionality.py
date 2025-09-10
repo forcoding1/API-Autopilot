@@ -25,7 +25,8 @@ async def main():
     print(op.url)
     print(op.task)
     structured_llm_func = llm.with_structured_output(APIDescription)
-    content = await get_page(op.url)
+    content = await get_page("https://petstore.swagger.io/v2/swagger.json")
+    print(content)
 
 
 
@@ -35,17 +36,17 @@ async def main():
     ]
     structured_content = structured_llm_func.invoke(messages2)
     print(structured_content)
-    endpoints = structured_content.endpoints
+    # endpoints = structured_content.endpoints
 
-    print(endpoints)
+    # print(endpoints)
 
-    messages3 = [
-        SystemMessage(content = prompts.API_CODEGEN_SYSTEM),
-        HumanMessage(content=prompts.api_codegen(structured_content))
-    ]
-    code = llm.invoke(messages3)
-    print("\n\n---------------------------------------------------------------------\n\n")
-    print(code.content.replace("`", ""))
+    # messages3 = [
+    #     SystemMessage(content = prompts.API_CODEGEN_SYSTEM),
+    #     HumanMessage(content=prompts.api_codegen(structured_content))
+    # ]
+    # code = llm.invoke(messages3)
+    # print("\n\n---------------------------------------------------------------------\n\n")
+    # print(code.content.replace("`", ""))
 
 if __name__ == "__main__":
     asyncio.run(main())

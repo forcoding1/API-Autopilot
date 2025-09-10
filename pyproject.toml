@@ -8,6 +8,8 @@ dependencies = [
     "bs4>=0.0.2",
     "langchain-google-genai>=2.1.10",
     "langgraph>=0.6.6",
+    "openapi-spec-validator>=0.7.2",
     "playwright>=1.55.0",
+    "prance>=25.4.8.0",
     "python-dotenv>=1.1.1",
 ]
