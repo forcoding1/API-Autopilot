@@ -32,6 +32,7 @@ class Workflow:
         graph.add_edge("code_gen", "file_writer")
         graph.add_edge("file_writer", END)
         return graph.compile()
+        
 
     def _api_input(self, state:ResearchState) -> str:
         api_key = input("API_KEY: ")
@@ -92,6 +93,11 @@ class Workflow:
         final_state = await self.workflow.ainvoke(initial_state)
         return ResearchState(**final_state)
 
+    def save_graph(self, filename: str = "workflow.png"):
+        png = self.workflow.get_graph().draw_mermaid_png()
+        with open(filename, "wb") as f:
+            f.write(png)
+        print(f"Workflow graph saved as {filename}")
 
 
 

@@ -15,6 +15,8 @@ async def main():
         else:
             url = input("Resource (web link, swagger html, etc...): ")
             result = await workflow.run(query=URLPrompt(url=url, task=query))
+    # workflow.save_graph("workflow.png")
+
 
 if __name__ == "__main__":
     asyncio.run(main())

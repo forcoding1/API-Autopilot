@@ -11,5 +11,6 @@ dependencies = [
     "openapi-spec-validator>=0.7.2",
     "playwright>=1.55.0",
     "prance>=25.4.8.0",
+    "pydot>=4.0.1",
     "python-dotenv>=1.1.1",
 ]
