@@ -45,16 +45,9 @@ Bash
 
 git clone https://github.com/your-username/api-autopilot.git
 cd api-autopilot
-Install Python dependencies:
+Install Python dependencies: dependencies available in pyproject.toml
+Install Playwright browser
 
-Bash
-
-pip install -r requirements.txt
-Install Playwright browsers:
-
-Bash
-
-playwright install
 ## Configuration
 This project requires a Google API key to use the Gemini model.
 
